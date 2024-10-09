@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const dotenv = require("dotenv").config();
 const path = require("path");
-const http=require('http')
+const http = require("http");
 const createHttpError = require("http-errors");
 const { appRouter } = require("./routes/router");
 class Application {
@@ -59,12 +59,9 @@ class Application {
       const serverError = createHttpError.InternalServerError();
       const statusCode = err.status || serverError.statusCode;
       let message;
-      if (process.env.app_state == "dev") {
-        message = err.message || serverError.message;
-      } else {
-        console.log(err);
-        message = serverError.message;
-      }
+
+      message = err.message || serverError.message;
+
       res.status(statusCode).json({
         status: statusCode,
         message,
@@ -72,12 +69,10 @@ class Application {
     });
   }
   createRoute() {
-    this.#app.use("/api/v1/", appRouter);
+    this.#app.use("/api/v1", appRouter);
   }
 }
 
-
 module.exports = {
-    Application
-  };
-  
+  Application,
+};
