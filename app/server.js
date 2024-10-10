@@ -6,6 +6,7 @@ const path = require("path");
 const http = require("http");
 const createHttpError = require("http-errors");
 const { appRouter } = require("./routes/router");
+const { mainRouter } = require("./routes/mainRoute/main_route.router");
 class Application {
   #app = express();
   #PORT;
@@ -70,6 +71,7 @@ class Application {
   }
   createRoute() {
     this.#app.use("/api/v1", appRouter);
+    this.#app.use('/',mainRouter)
   }
 }
 
